@@ -475,4 +475,4 @@ int main()
     return 0;
 }
 
-// some if conditions are useless
+// some if conditions are useless, find them out.
