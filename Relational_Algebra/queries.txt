@@ -1,0 +1,25 @@
+1. Find all the roll numbers of the students who are not enrolled in any course that is offered by
+the department in which the student belongs to.
+
+R[result](D[P[rollno](student)](R[(rollno)](P[s.rollno](S[s.rollno = ce.rollno ^ s.department = ce.department](C[R[s](student)](R[ce](S[e.courseid = c.courseid](C[R[e](enrollment)](R[c](course))))))))))
+
+
+2. Find all the professors (empID and name) who advise atleast one course in the department they belong to.
+
+R[result](P[empid, firstname, lastname](S[empID = advisor ^ p.department = c.department](C[R[p](professor)](R[c](course)))))
+
+
+3. Find all the students (rollNo and Name) who are enrolled in all the courses offered by a department.
+
+R[result(rollno, first_name, last_name)](P[s.rollno, firstname, lastname](S[good.rollno = s.rollno](C[R[good](D[R[all(department, rollno)](P[deptid, rollno](C[R[d](department)](R[s](student))))](R[bad](P[department, rollno](D[C[R[dc1(department, courseid)](P[department, courseid](S[deptid = department](C[R[d](department)](R[c](course)))))](R[s](P[rollno](student)))](R[dcs2(department, courseid, rollno)](P[department, e.courseid, rollno](S[dc2.courseid = e.courseid](C[R[dc2(department, courseid)](P[department, courseid](S[deptid = department](C[R[d](department)](R[c](course)))))](R[e](enrollment))))))))))](R[s](student)))))
+
+
+4. Find the courseIDs of the courses with the maximum creidts
+
+R[result](D[P[courseid, credits](course)](R[(courseid, credits)](P[c1.courseid, c1.credits](S[c1.credits < c2.credits](C[R[c1](course)](R[c2](course)))))))
+
+
+5. Find all the courses that don't have a female student
+(course with no enrollments also don't have any female students)
+
+R[result](D[P[courseid](course)](P[courseid](S[e.rollno = s.rollno ^ sex = 'f'](C[R[e](enrollment)](R[s](student))))))
